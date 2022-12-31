@@ -7,10 +7,9 @@ export default function FB() {
   console.log(isFacebookReady)
 
   const handleFacebookLogin = async () => {
-    console.log(facebook);
     const response = await facebook.login()
 
-    if (response !== undefined) {
+    if (response.authResponse != null || response.status !== 'unknown') {
       setIsLoggedIn(true);
       setStatus('connected');
     }
@@ -22,7 +21,8 @@ export default function FB() {
 
   const handleLogout = async () => {
     const { authResponse, status } = await facebook.logout();
-    if (authResponse === null || status === 'unknown') {
+
+    if (authResponse == null || status === 'unknown') {
       setIsLoggedIn(false);
       setStatus('disconnected');
     }
