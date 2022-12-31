@@ -50,6 +50,7 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
             fb_exchange_token: accessToken,
             accessToken,
             apiUrl: 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token',
+            userId,
           }, {
             headers: {
               authorization: `Bearer ${accessToken}`
