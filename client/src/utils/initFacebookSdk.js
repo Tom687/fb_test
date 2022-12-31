@@ -1,10 +1,11 @@
+/*
 export function initializeFacebookSdk() {
 
-  /* Asynchronous flow: if the global 'FB' variable is still undefined,
+  /!* Asynchronous flow: if the global 'FB' variable is still undefined,
    then the facebook script hasn't loaded yet, in that case, provide
    a global callback that will be called by the facebook code. If the
    variable is already present, just call the code right away and forget
-   about the callback. */
+   about the callback. *!/
   if(window.FB === undefined) {
     console.log('FB undefined -> provide callback');
     window.fbAsyncInit = function() {
@@ -24,4 +25,4 @@ export function initializeFacebookSdk() {
       version    : 'v15.0'
     });
   }
-}
+}*/
