@@ -5,3 +5,5 @@ import { facebookAuth } from '../controllers/auth.js';
 const router = express.Router();
 
 router.get('/facebook', facebookAuth);
+
+export default router;
