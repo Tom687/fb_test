@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export default function FacebookLoginButton() {
-  const [isLoggedin, setIsLoggedin] = useState(false);
+export default function FacebookLoginButton({ /*isLoggedIn = false, setIsLoggedIn*/ }) {
+  //const [isLoggedin, setIsLoggedin] = useState(false);
 
   const onLoginClick = () => {
     console.info('LOGIN CLICKED !');
