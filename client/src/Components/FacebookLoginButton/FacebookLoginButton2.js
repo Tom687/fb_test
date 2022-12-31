@@ -3,9 +3,36 @@ import { useState, useEffect, useCallback } from 'react';
 export default function FacebookLoginButton2() {
   const FB = window.FB;
 
+  useEffect(() => {
+    window.fbAsyncInit = function() {
+      window.FB.init({
+        appId: `${process.env.APP_ID}`,
+        cookie: true,
+        xfbml: true,
+        version: 'v15.0',
+      });
+
+      window.FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src =
+        'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }, []);
+
   async function fbLogin() {
+    const FB = window.FB;
+
     await FB.init({
-      appId: `${process.env.APP_ID}`,
+      appId: `1242384183292030`,
       autoLogAppEvents: true,
       xfbml: true,
       version: 'v15.0',

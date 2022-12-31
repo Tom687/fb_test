@@ -3,23 +3,23 @@ import { useState, useEffect } from 'react';
 export default function FacebookLoginButton() {
   const [isLoggedin, setIsLoggedin] = useState(false);
 
-  /*const onLoginClick = () => {
-   console.info('LOGIN CLICKED !');
-   //window.FB.login(...);
-   window.FB.getLoginStatus(function(response) {
-   //statusChangeCallback(response);
-   console.log(response);
-   });
-   window.FB.login(function(response) {
+  const onLoginClick = () => {
+    console.info('LOGIN CLICKED !');
+    //window.FB.login(...);
+    window.FB.getLoginStatus(function(response) {
+      //statusChangeCallback(response);
+      console.log(response);
+    });
+    window.FB.login(function(response) {
 
-   if (response.authResponse) {
-   console.log('AUTH RES', response.authResponse);
-   }
-   else {
-   console.log('eeeeennnn')
-   }
-   })
-   };*/
+      if (response.authResponse) {
+        console.log('AUTH RES', response.authResponse);
+      }
+      else {
+        console.log('eeeeennnn');
+      }
+    });
+  };
 
 
   window.checkLoginState = () => {

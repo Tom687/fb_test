@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const initialzeFacebookSdk = () => {
+const FB = window.FB;
+
+const initializeFacebookSdk = () => {
   new Promise((resolve, reject) => {
     if (typeof FB !== 'undefined') {
       resolve();
@@ -39,7 +41,7 @@ const useFacebookSdk = () => {
   const [isReady, setReady] = useState(false);
 
   const initFacebook = useCallback(async () => {
-    await initializeFb();
+    await initializeFacebookSdk();
     // eslint-disable-next-line no-undef
     if (typeof FB !== 'undefined') {
       // eslint-disable-next-line no-undef
@@ -52,7 +54,7 @@ const useFacebookSdk = () => {
     initFacebook();
   }, [initFacebook]);
 
-  return [fb, isReady];const []
+  return [fb, isReady];
 };
 
 export default useFacebookSdk;
