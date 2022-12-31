@@ -3,6 +3,7 @@ import useFacebookSdk from '../../hooks/useFacebookSdk';
 export default function FB2() {
   const [FBInstance, isReady] = useFacebookSdk();
 
+  console.log(FBInstance)
   console.log(isReady)
 
   const onLoginClick = () => {
