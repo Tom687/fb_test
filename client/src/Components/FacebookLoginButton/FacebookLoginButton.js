@@ -37,7 +37,6 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
   window.checkLoginState = () => {
     window.FB.getLoginStatus(async function(response) {
       //statusChangeCallback(response);
-      console.log(response);
       if (response.status === 'connected' || response.authResponse) {
         const accessToken = response.authResponse.accessToken;
         const userId = response.authResponse.userID;
@@ -64,6 +63,7 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
             localStorage.setItem('pageAccessToken', res.data.pageAccessToken);
             localStorage.setItem('pageAccessTokenType', res.data.pageAccessTokenType);
             localStorage.setItem('pageAccessTokenExpiresIn', res.data.expiresIn);
+            localStorage.setItem('userId', userId);
 
             setIsLoggedIn(true);
           }
