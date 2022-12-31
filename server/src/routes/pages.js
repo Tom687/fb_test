@@ -1,9 +1,9 @@
 import express from 'express';
-import { getPosts } from '../controllers/pages.js';
+import { getPagesAccessToken } from '../controllers/pages.js';
 
 const router = express.Router();
 
 //router.get('/')
-router.post('/', getPosts);
+router.post('/', getPagesAccessToken);
 
 export default router;
