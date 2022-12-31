@@ -12,7 +12,7 @@ import FacebookLoginButton from './Components/FacebookLoginButton/FacebookLoginB
 function App() {
   //initializeFacebookSdk();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  console.log({isLoggedIn})
   return (
     <div className="App">
       <h1>Test FB</h1>
@@ -24,7 +24,9 @@ function App() {
       <FacebookLoginButton3 />*/}
       <FB />
       <FB2 />
-      <Posts />
+      <Posts
+        isLoggedIn={isLoggedIn}
+      />
     </div>
   );
 }
