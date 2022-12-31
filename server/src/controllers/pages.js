@@ -1,16 +1,21 @@
 import axios from 'axios';
-export const getPosts = async (req, res, next) => {
-  console.log({...req.body})
-  const { client_id, client_secret, fb_exchange_token, accessToken, url } = req.body;
+export const getPagesAccessToken = async (req, res, next) => {
+  const { client_id, client_secret, fb_exchange_token, accessToken, apiUrl } = req.body;
 
-  //const res = await axios.get('')
-  //const res = await axios.get('/')
-  const uri = `${url}&client_id=${client_id}&client_secret=${client_secret}&fb_exchange_token=${fb_exchange_token}`;
-  console.log({uri})
-  const result = await axios.get(uri, {
+  const url = `${apiUrl}&client_id=${client_id}&client_secret=${client_secret}&fb_exchange_token=${fb_exchange_token}`;
+
+  const fetchAccessToken = await axios.get(url, {
     header: {
       authorization: `Bearer ${accessToken}`
     }
-  })
-  console.log({result})
+  });
+
+  const data = fetchAccessToken.data;
+
+  return res.status(200).json({
+    userAccessToken: accessToken,
+    pageAccessToken: data.access_token,
+    pageAccessTokenType: data.token_type,
+    expiresIn: data.expires_in
+  });
 }
