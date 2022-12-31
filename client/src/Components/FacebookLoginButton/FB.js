@@ -2,6 +2,7 @@ import useFacebookSdk2 from '../../hooks/useFacebookSdk2';
 
 export default function FB() {
   const [facebook, isFacebookReady] = useFacebookSdk2();
+  console.log(isFacebookReady)
 
   const handleFacebookLogin = async () => {
     console.log(facebook);

@@ -4,13 +4,14 @@ const FB = window.FB;
 
 const initializeFacebookSdk = () => {
   new Promise((resolve, reject) => {
+    const FB = window.FB;
     if (typeof FB !== 'undefined') {
       resolve();
     }
     else {
       window.fbAsyncInit = function() {
-        FB.init({
-          appId: `${process.env.APP_ID}`,
+        window.FB.init({
+          appId: `1242384183292030`,
           cookie: true,
           xfbml: true,
           version: 'v15.0',
@@ -21,17 +22,16 @@ const initializeFacebookSdk = () => {
       };
 
       (function(d, s, id) {
-        let js;
-        const fjs = d.getElementsByTagName(s)[0];
+        var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {
           return;
         }
-        // eslint-disable-next-line prefer-const
         js = d.createElement(s);
         js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk.js';
+        js.src =
+          'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0';
         fjs.parentNode.insertBefore(js, fjs);
-      })(document, 'script', 'facebook-jssdk');
+      }(document, 'script', 'facebook-jssdk'));
     }
   });
 }
