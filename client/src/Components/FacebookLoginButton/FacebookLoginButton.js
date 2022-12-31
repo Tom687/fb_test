@@ -21,38 +21,6 @@ export default function FacebookLoginButton() {
    })
    };*/
 
-  /*useEffect(() => {
-   window.fbAsyncInit = function() {
-   window.FB.init({
-   appId: '1242384183292030',
-   cookie: true,
-   xfbml: true,
-   version: 'v15.0',
-   });
-
-   window.FB.AppEvents.logPageView();
-
-   };
-
-   (function(d, s, id) {
-   var js, fjs = d.getElementsByTagName(s)[0];
-   if (d.getElementById(id)) {
-   return;
-   }
-   js = d.createElement(s);
-   js.id = id;
-   js.src =
-   'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0';
-   fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-   }, []);*/
-
-  /*useEffect(() => {
-   window.FB.getLoginStatus(function(response) {
-   //statusChangeCallback(response);
-   console.log(response);
-   });
-   });*/
 
   window.checkLoginState = () => {
     window.FB.getLoginStatus(function(response) {
@@ -78,6 +46,7 @@ export default function FacebookLoginButton() {
         className="fb-login-button" data-width="300" data-size="large" data-button-type="continue_with"
         data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"
         data-onlogin="checkLoginState();"
+        data-scope="email,public_profile"
       ></div>
     </div>
   );
