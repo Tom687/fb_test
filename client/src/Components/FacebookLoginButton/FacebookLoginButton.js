@@ -34,8 +34,6 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
     });*!/
   };*/
 
-  console.log({isLoggedIn})
-
   window.checkLoginState = () => {
     window.FB.getLoginStatus(async function(response) {
       //statusChangeCallback(response);
@@ -46,19 +44,29 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
         setIsLoggedIn(true);
 
         try {
-          const res = axios.post('http://localhost:1337/pages', {
+          // TODO : Changer url ?
+          const res = await axios.post('http://localhost:1337/pages', {
             client_id: '1242384183292030',
             client_secret: 'e61a882707fe673a37d55a450486a68c',
             fb_exchange_token: accessToken,
             accessToken,
-            url: 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token',
+            apiUrl: 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token',
           }, {
             headers: {
               authorization: `Bearer ${accessToken}`
             }
-          })
+          });
 
-          console.log({res})
+          if (res.status === 200 || res.data.status === 'success') {
+            localStorage.setItem('accessToken', accessToken);
+            //localStorage.setItem('clientId', '1242384183292030')
+            //localStorage.setItem('appId', '1242384183292030')
+            localStorage.setItem('pageAccessToken', res.data.pageAccessToken);
+            localStorage.setItem('pageAccessTokenType', res.data.pageAccessTokenType);
+            localStorage.setItem('pageAccessTokenExpiresIn', res.data.expiresIn);
+
+            setIsLoggedIn(true);
+          }
         }
         catch (err) {
           console.log('Err getPageToken :', err);
@@ -71,15 +79,15 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
   };
 
   const onLogoutClick = async () => {
-    await window.FB.logout(() => setIsLoggedIn(false));
-    window.checkLoginState();
-    window.location.reload();
+    await window.FB.logout(() => {
+      localStorage.clear();
+      setIsLoggedIn(false);
+      window.checkLoginState();
+      window.location.reload();
+    });
+
   };
 
-
-
-
-  // FIXME : Comment faire réapparaitre le bouton login quand on logout ?
   return (
     <div>
       {/*<button
