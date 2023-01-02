@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import useFacebookSdk2 from '../../hooks/useFacebookSdk2';
 
 export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn }) {
   //const [isLoggedin, setIsLoggedin] = useState(false);
+  const [facebook, isFacebookReady] = useFacebookSdk2();
 
   /*const onLoginClick = () => {
    console.info('LOGIN CLICKED !');
@@ -63,14 +65,8 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('pages', JSON.stringify(res.data.data.data))
             res.data.data.data.forEach((val, i) => {
-              console.log({val})
               localStorage.setItem(`page${i}`, JSON.stringify(val));
-            })
-            //localStorage.setItem('clientId', '1242384183292030')
-            //localStorage.setItem('appId', '1242384183292030')
-            //localStorage.setItem('pageAccessToken', res.data.pageAccessToken);
-            //localStorage.setItem('pageAccessTokenType', res.data.pageAccessTokenType);
-            //localStorage.setItem('pageAccessTokenExpiresIn', res.data.expiresIn);
+            });
 
             setIsLoggedIn(true);
           }
