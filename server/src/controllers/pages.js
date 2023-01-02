@@ -5,7 +5,7 @@ export const getPagesAccessToken = async (req, res, next) => {
   //const url =
   // `${apiUrl}&client_id=${client_id}&client_secret=${client_secret}&fb_exchange_token=${fb_exchange_token}`;
 
-  console.log({...req.body})
+  console.log({userId})
   const url = `https://graph.facebook.com/${userId}/accounts?access_token=${accessToken}`;
 
   const fetchPagesAccessToken = await axios.get(url, {
@@ -16,13 +16,13 @@ export const getPagesAccessToken = async (req, res, next) => {
 
   const data = fetchPagesAccessToken.data;
 
-  console.log({...data})
+  //console.log({...data})
 
   //const pagesData = data.map((page) => {
   //  return {
   //    pageAccessToken: page.access_token,
   //  }
-  //})
+  //});
 
 
   return res.status(200).json({
