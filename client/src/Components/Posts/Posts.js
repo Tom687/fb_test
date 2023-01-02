@@ -6,22 +6,17 @@ export default function Posts({ isLoggedIn, pages, setPages }) {
   const [posts, setPosts] = useState('');
 
   //const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
-  const [userPages, setUserPages] = useState([]);
+  const [userPages, setUserPages] = useState(pages || []);
 
   const [selectedPage, setSelectedPage] = useState();
-
-  useEffect(() => {
-    if (pages && pages.length > 0) {
-      setUserPages(pages);
-    }
-  }, [pages]);
+  const [id, setId] = useState('');
 
   const getUserPages = async () => {
 
   };
   console.log({userPages})
 
-  const getPosts = async () => {
+  const getPosts = async (pageId) => {
     try {
       //const res = await axios.get(`https://graph.facebook.com/ncla1ere?fields=id&access_token=${myUserToken}`);
       const pageAccessToken = localStorage.getItem('pageAccessToken');
@@ -30,7 +25,7 @@ export default function Posts({ isLoggedIn, pages, setPages }) {
       // TODO : Pour récupérer l
       // FIXME : ID de la page pas bon, comment récupérer la liste des pages de l'user ?
       if (pageAccessToken) {
-        const res = await axios.get(`https://graph.facebook.com/110201451952871/feed?fields=insights.metric(post_impressions_unique,post_impressions)?access_token=${pageAccessToken}`);
+        const res = await axios.get(`https://graph.facebook.com/110201451952871/feed?access_token=${pageAccessToken}`);
 
         return res.data;
       }
@@ -50,17 +45,15 @@ export default function Posts({ isLoggedIn, pages, setPages }) {
   }, [isLoggedIn]);
 
   const handlePageSelect = (e) => {
-    console.log({...e.target.value})
-    const value = e.target.value;
-    console.log(Object.keys(userPages))
-    //const pages =
     userPages.forEach((page, i) => {
       if (Object.values(userPages[i]).includes(e.target.value)) {
         setSelectedPage(page);
+        setId(page.id);
       }
     });
   };
   console.log({selectedPage})
+  console.log({id})
 
   return (
     <div>
