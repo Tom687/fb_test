@@ -10,7 +10,7 @@ export default function Posts({ isLoggedIn }) {
 
   const [selectedPage, setSelectedPage] = useState({});
 
-  console.log({posts})
+  const [pageInsights, setPageInsights] = useState([]);
 
   const getUserPages = async () => {
     try {
@@ -20,7 +20,6 @@ export default function Posts({ isLoggedIn }) {
       if (pageAccessToken) {
         const res = await axios.get(`https://graph.facebook.com/v15.0/${pageId}/feed?access_token=${pageAccessToken}&since=0&limit=100`);
 
-        console.log({...res.data})
         return res.data;
       }
     }
@@ -34,6 +33,27 @@ export default function Posts({ isLoggedIn }) {
     setSelectedPage(...updated);
   };
 
+  const getPageInsights = async () => {
+    try {
+      const res = await axios.post('http://localhost:1337/pages/insights', {
+        pageId: selectedPage.id,
+        metrics: 'page_impressions_unique,page_engaged_users',
+        pageAccessToken: selectedPage.access_token,
+      }, {
+        headers: {
+          authorization: `Bearer ${selectedPage.access_token}`,
+        }
+      });
+
+      console.log({...res.data})
+
+      return res.data;
+    }
+    catch (err) {
+      console.log('getPageInsights err', err);
+    }
+  };
+
 
   // TODO : getPost() après setSelectedPage
   useEffect(() => {
@@ -41,13 +61,28 @@ export default function Posts({ isLoggedIn }) {
       getUserPages()
         .then(res => {
           if (res && res !== undefined) {
-            console.log({res})
             // TODO : Fonction / requête pour récupérer les insights ici ?
             setPosts(res.data);
           }
         });
     }
   }, [selectedPage, isLoggedIn]);
+
+  useEffect(() => {
+    console.log({selectedPage})
+
+    if (selectedPage && Object.keys(selectedPage).length > 0) {
+      console.log(33333)
+      getPageInsights()
+        .then(result => {
+          console.log(22222)
+          console.log({...result})
+          setPageInsights(result);
+        })
+    }
+  }, [selectedPage]);
+
+  console.log({pageInsights})
 
   return (
     <div>
@@ -90,6 +125,9 @@ export default function Posts({ isLoggedIn }) {
           ))
         }
       </StyledPostsList>
+      <StyledInsights>
+
+      </StyledInsights>
     </div>
   );
 }
@@ -109,4 +147,9 @@ const Post = styled.li`
 `;
 
 const StyledPage = styled.div`
+  
+`;
+
+const StyledInsights = styled.div`
+  
 `;
