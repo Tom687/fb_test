@@ -64,9 +64,9 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn,
             const pages = res.data.data.data;
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('pages', JSON.stringify(pages))
-            res.data.data.data.forEach((val, i) => {
-              localStorage.setItem(`page${i}`, JSON.stringify(val));
-            });
+            // res.data.data.data.forEach((val, i) => {
+            //   localStorage.setItem(`page${i}`, JSON.stringify(val));
+            // });
 
             setPages(pages);
             setIsLoggedIn(true);
