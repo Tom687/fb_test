@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -26,45 +26,10 @@ export default function Posts({ isLoggedIn, selectedPage, setSelectedPage }) {
     }
   };
 
-  /*const updateSelectedPageState = useCallback(
-    async () => {
-      const updatedSelectedPage = [...selectedDogs];
-      updatedSelectedDogs.push(dog);
-      setSelectedDogs(updatedSelectedDogs);
-    },
-    [selectedDogs],
-  );*/
-
-  // TODO : Modifier pour vider le state d'abord
   const handlePageSelect = (e) => {
-    /*userPages.forEach((page, i) => {
-      if (Object.values(userPages[i]).includes(e.target.value)) {
-        console.log({ page });
-        setSelectedPage([page]);
-      }
-    });*/
-
-    console.log(e.target.value)
-    const updated = userPages.filter(page => page.id != e.target.value);
+    const updated = userPages.filter(page => page.id !== e.target.value);
     setSelectedPage(updated);
-
-    /*const updatedState = userPages.map(userPage => {
-      if (userPage.id === e.target.value) {
-        console.log({userPage})
-        return {
-          access_token: userPage.access_token,
-          category: userPage.category,
-          id: userPage.id,
-          name: userPage.name,
-        };
-      }
-      else {
-        return userPage;
-      }
-    });*/
   };
-
-  console.log({selectedPage})
 
 
   // TODO : getPost() après setSelectedPage
@@ -101,11 +66,11 @@ export default function Posts({ isLoggedIn, selectedPage, setSelectedPage }) {
         <ul>
           {
             selectedPage && selectedPage.length > 0 && selectedPage.map((page, i) => (
-              <>
-                <li key={i}>Nom de la page : {page.name}</li>
-                <li key={i}>ID de la page : {page.id}</li>
-                <li key={i}>Catégorie : {page.category}</li>
-              </>
+              <React.Fragment key={page.id}>
+                <li>Nom de la page : {page.name}</li>
+                <li>ID de la page : {page.id}</li>
+                <li>Catégorie : {page.category}</li>
+              </React.Fragment>
             ))
           }
         </ul>
