@@ -11,17 +11,20 @@ function App() {
   return (
     <div className="App">
       <h1>Test FB</h1>
+
       <FacebookLoginButton
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
         pages={pages}
         setPages={setPages}
       />
+
       <Posts
         isLoggedIn={isLoggedIn}
         pages={pages}
         setPages={setPages}
       />
+
     </div>
   );
 }
