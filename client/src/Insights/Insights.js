@@ -44,6 +44,7 @@ export default function Insights({ selectedPage }) {
                 <br />
                 <li>Nom insight : {insight.title}</li>
                 <li>Nombre de contenu s'étant engagé sur la page : {insight.values[0].value}</li>
+                <br/> <br/>
               </React.Fragment>
             );
           })

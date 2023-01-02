@@ -10,6 +10,8 @@ export default function Posts({ isLoggedIn }) {
   const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
 
   const [selectedPage, setSelectedPage] = useState({});
+  
+  const [selectedTab, setSelectedSelectedTab] = useState('default');
 
   const getUserPages = async () => {
     try {
@@ -46,10 +48,15 @@ export default function Posts({ isLoggedIn }) {
     }
   }, [selectedPage, isLoggedIn]);
 
+  console.log(selectedTab);
 
   return (
     <div>
-      Test posts :
+      <div>
+        <button type="button" onClick={() => setSelectedSelectedTab('posts')}>Posts</button>
+        <button type="button" onClick={() => setSelectedSelectedTab('insights')}>Insights</button>
+      </div>
+      Sélectionner la page à voir :
       <form onSubmit={handlePageSelect}>
         <select
           name="page" id="pageSelect" value={'selectedPage'} onChange={(e) => handlePageSelect(e)} value="options"
@@ -64,6 +71,7 @@ export default function Posts({ isLoggedIn }) {
           }
         </select>
       </form>
+
       <StyledPage>
         <ul>
           {
@@ -77,20 +85,29 @@ export default function Posts({ isLoggedIn }) {
           }
         </ul>
       </StyledPage>
-      <StyledPostsList>
-        {
-          posts && posts.map((post, i) => (
-            <Post key={post.id}>
-              {post.message} <br />
-              <strong>ID :{post.id} <br /></strong>
-              {post.created_time} <br />
-            </Post>
-          ))
-        }
-      </StyledPostsList>
-      <StyledInsights>
-        <Insights selectedPage={selectedPage} />
-      </StyledInsights>
+      {
+        selectedTab === 'posts' || selectedTab === 'default' &&
+        <StyledPostsList>
+          {
+            posts && posts.map((post, i) => (
+              <Post key={post.id}>
+                {post.message} <br />
+                <strong>ID :{post.id} <br /></strong>
+                {post.created_time} <br />
+              </Post>
+            ))
+          }
+        </StyledPostsList>
+      }
+
+      <br />
+      {
+        selectedTab === 'insights' &&
+        <StyledInsights>
+          <Insights selectedPage={selectedPage} />
+        </StyledInsights>
+      }
+
     </div>
   );
 }
