@@ -112,7 +112,7 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
           data-auto-logout-link="false"
           data-use-continue-as="false"
           data-onlogin="checkLoginState();"
-          data-scope="email,public_profile"
+          data-scope="email,public_profile,pages_read_user_content,pages_read_engagement,page_show_list,read_insights"
         />
       }
       {
