@@ -3,12 +3,14 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 // TODO : Passer pages en prop ? Pour ça que ça render en double ?
-export default function Posts({ isLoggedIn, selectedPage, setSelectedPage }) {
-  const [posts, setPosts] = useState('');
+export default function Posts({ isLoggedIn }) {
+  const [posts, setPosts] = useState([]);
 
   const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
 
-  /*const [selectedPage, setSelectedPage] = useState([]);*/
+  const [selectedPage, setSelectedPage] = useState({});
+
+  console.log({posts})
 
   const getUserPages = async () => {
     try {
@@ -18,6 +20,7 @@ export default function Posts({ isLoggedIn, selectedPage, setSelectedPage }) {
       if (pageAccessToken) {
         const res = await axios.get(`https://graph.facebook.com/v15.0/${pageId}/feed?access_token=${pageAccessToken}&since=0&limit=100`);
 
+        console.log({...res.data})
         return res.data;
       }
     }
@@ -27,8 +30,8 @@ export default function Posts({ isLoggedIn, selectedPage, setSelectedPage }) {
   };
 
   const handlePageSelect = (e) => {
-    const updated = userPages.filter(page => page.id !== e.target.value);
-    setSelectedPage(updated);
+    const updated = userPages.filter(page => page.id === e.target.value);
+    setSelectedPage(...updated);
   };
 
 
@@ -38,6 +41,7 @@ export default function Posts({ isLoggedIn, selectedPage, setSelectedPage }) {
       getUserPages()
         .then(res => {
           if (res && res !== undefined) {
+            console.log({res})
             // TODO : Fonction / requête pour récupérer les insights ici ?
             setPosts(res.data);
           }
@@ -65,13 +69,13 @@ export default function Posts({ isLoggedIn, selectedPage, setSelectedPage }) {
       <StyledPage>
         <ul>
           {
-            selectedPage && selectedPage.length > 0 && selectedPage.map((page, i) => (
-              <React.Fragment key={page.id}>
-                <li>Nom de la page : {page.name}</li>
-                <li>ID de la page : {page.id}</li>
-                <li>Catégorie : {page.category}</li>
+            selectedPage && Object.keys(selectedPage).length > 0 && (
+              <React.Fragment key={selectedPage.id}>
+                <li>Nom de la page : { selectedPage.name }</li>
+                <li>ID de la page : { selectedPage.id }</li>
+                <li>Catégorie : { selectedPage.category }</li>
               </React.Fragment>
-            ))
+            )
           }
         </ul>
       </StyledPage>
