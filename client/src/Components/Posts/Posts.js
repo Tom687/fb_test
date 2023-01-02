@@ -14,16 +14,19 @@ export default function Posts({ isLoggedIn }) {
   };
   console.log({userPages})
 
-  const getPosts = async () => {
+  console.log({selectedPage})
+
+  const getPosts = async (pageId) => {
     try {
       //const res = await axios.get(`https://graph.facebook.com/ncla1ere?fields=id&access_token=${myUserToken}`);
+      const accessToken = selectedPage.access_token;
       const pageAccessToken = localStorage.getItem('pageAccessToken');
-      console.log({pageAccessToken})
+      console.log({accessToken})
 
       // TODO : Pour récupérer l
       // FIXME : ID de la page pas bon, comment récupérer la liste des pages de l'user ?
-      if (pageAccessToken) {
-        const res = await axios.get(`https://graph.facebook.com/110201451952871/feed?access_token=${pageAccessToken}`);
+      if (accessToken) {
+        const res = await axios.get(`https://graph.facebook.com/110201451952871/feed?access_token=${accessToken}`);
 
         return res.data;
       }
@@ -33,15 +36,6 @@ export default function Posts({ isLoggedIn }) {
     }
   };
 
-  useEffect(() => {
-    getPosts()
-      .then(res => {
-        if (res !== undefined) {
-          setPosts(res.data);
-        }
-      });
-  }, [isLoggedIn]);
-
   const handlePageSelect = (e) => {
     userPages.forEach((page, i) => {
       if (Object.values(userPages[i]).includes(e.target.value)) {
@@ -50,6 +44,20 @@ export default function Posts({ isLoggedIn }) {
     });
   };
 
+  // TODO : getPost() après setSelectedPage
+  useEffect(() => {
+    if ((selectedPage && Object.keys(selectedPage).length > 0) && isLoggedIn) {
+      getPosts()
+        .then(res => {
+          console.log({...res.data})
+          if (res !== undefined) {
+            setPosts(res.data);
+          }
+        });
+    }
+  }, [selectedPage, isLoggedIn]);
+
+  console.log({posts})
 
   return (
     <div>
