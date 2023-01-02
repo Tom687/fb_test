@@ -27,7 +27,6 @@ export default function Insights({ selectedPage }) {
     if (selectedPage && Object.keys(selectedPage).length > 0) {
       getPageInsights()
         .then(result => {
-          console.log({ result });
           setPageInsights(result);
         });
     }
