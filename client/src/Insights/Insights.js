@@ -4,7 +4,6 @@ import axios from 'axios';
 export default function Insights({ selectedPage }) {
   const [pageInsights, setPageInsights] = useState([]);
 
-  console.log(pageInsights);
   const getPageInsights = async () => {
     try {
       const res = await axios.post('http://localhost:1337/pages/insights', {
