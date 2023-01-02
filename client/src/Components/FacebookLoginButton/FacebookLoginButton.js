@@ -3,6 +3,7 @@ import axios from 'axios';
 //import useFacebookSdk2 from '../../hooks/useFacebookSdk2';
 
 export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn, pages, setPages }) {
+  // TODO : Utiliser connexion user d'abord (pour redirect_uri / live feed) puis connection page ?
   window.checkLoginState = () => {
     window.FB.getLoginStatus(async function(response) {
       if (response.status === 'connected' || response.authResponse) {
