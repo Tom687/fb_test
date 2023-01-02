@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Posts from './Components/Posts/Posts';
 //import FB from './Components/FacebookLoginButton/FB';
@@ -10,6 +10,12 @@ function App() {
   //initializeFacebookSdk();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [pages, setPages] = useState([]);
+
+  /*const [, forceRender] = useState();
+
+  useEffect(() => {
+    forceRender();
+  }, [pages]);*/
 
   return (
     <div className="App">
