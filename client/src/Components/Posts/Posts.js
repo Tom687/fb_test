@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
 // TODO : Passer pages en prop ? Pour ça que ça render en double ?
-export default function Posts({ isLoggedIn }) {
+export default function Posts({ isLoggedIn, selectedPage, setSelectedPage }) {
   const [posts, setPosts] = useState('');
 
   const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
 
-  const [selectedPage, setSelectedPage] = useState({});
+  /*const [selectedPage, setSelectedPage] = useState([]);*/
 
   const getUserPages = async () => {
     try {
@@ -26,15 +26,46 @@ export default function Posts({ isLoggedIn }) {
     }
   };
 
+  /*const updateSelectedPageState = useCallback(
+    async () => {
+      const updatedSelectedPage = [...selectedDogs];
+      updatedSelectedDogs.push(dog);
+      setSelectedDogs(updatedSelectedDogs);
+    },
+    [selectedDogs],
+  );*/
+
   // TODO : Modifier pour vider le state d'abord
   const handlePageSelect = (e) => {
-    userPages.forEach((page, i) => {
+    /*userPages.forEach((page, i) => {
       if (Object.values(userPages[i]).includes(e.target.value)) {
         console.log({ page });
-        setSelectedPage(page);
+        setSelectedPage([page]);
       }
-    });
+    });*/
+
+    console.log(e.target.value)
+    const updated = userPages.filter(page => page.id != e.target.value);
+    setSelectedPage(updated);
+
+    /*const updatedState = userPages.map(userPage => {
+      if (userPage.id === e.target.value) {
+        console.log({userPage})
+        return {
+          access_token: userPage.access_token,
+          category: userPage.category,
+          id: userPage.id,
+          name: userPage.name,
+        };
+      }
+      else {
+        return userPage;
+      }
+    });*/
   };
+
+  console.log({selectedPage})
+
 
   // TODO : getPost() après setSelectedPage
   useEffect(() => {
@@ -58,7 +89,9 @@ export default function Posts({ isLoggedIn }) {
         >
           <option disabled={true} selected={true} value="options">Sélectionnez la page</option>
           {
-            userPages && Object.keys(userPages).length > 0 && userPages.map((userPage, i) => (
+            userPages
+            && userPages.length > 0
+            && userPages.map((userPage, i) => (
               <option value={userPage.id} key={userPage.id}>{`${userPage.name} - ID : ${userPage.id}`}</option>
             ))
           }
@@ -67,13 +100,13 @@ export default function Posts({ isLoggedIn }) {
       <StyledPage>
         <ul>
           {
-            selectedPage && Object.keys(selectedPage).length > 0 && (
+            selectedPage && selectedPage.length > 0 && selectedPage.map((page, i) => (
               <>
-                <li key={selectedPage.id}>Nom de la page : {selectedPage.name}</li>
-                <li key={selectedPage.id}>ID de la page : {selectedPage.id}</li>
-                <li key={selectedPage.id}>Catégorie : {selectedPage.category_list[0].name}</li>
+                <li key={i}>Nom de la page : {page.name}</li>
+                <li key={i}>ID de la page : {page.id}</li>
+                <li key={i}>Catégorie : {page.category}</li>
               </>
-            )
+            ))
           }
         </ul>
       </StyledPage>
