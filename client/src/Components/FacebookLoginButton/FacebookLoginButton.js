@@ -13,12 +13,13 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn,
 
         try {
           const res = await axios.post('http://localhost:1337/pages', {
-            client_id: '1242384183292030',
-            client_secret: 'e61a882707fe673a37d55a450486a68c',
-            fb_exchange_token: accessToken,
+            //client_id: '1242384183292030',
+            //client_secret: 'e61a882707fe673a37d55a450486a68c',
+            //fb_exchange_token: accessToken,
             accessToken,
             userId,
-            apiUrl: 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token',
+            //apiUrl: 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token',
+            apiUrl: 'https://graph.facebook.com/',
           }, {
             headers: {
               authorization: `Bearer ${accessToken}`,
