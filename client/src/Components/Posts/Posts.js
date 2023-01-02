@@ -8,7 +8,7 @@ export default function Posts({ isLoggedIn }) {
   const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
 
   const [selectedPage, setSelectedPage] = useState({});
-  
+
   const getUserPages = async () => {
 
   };
@@ -115,5 +115,5 @@ const Post = styled.li`
 `;
 
 const StyledPage = styled.div`
-  
+
 `;
