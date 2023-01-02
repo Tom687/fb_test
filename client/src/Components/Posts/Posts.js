@@ -3,28 +3,16 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 export default function Posts({ isLoggedIn }) {
-  const myUserToken = 'EAAJWiqdRDFMBAIjYq9ng7ZAmkv38jGMnk2DGHKj6lylVQygvZBThM2QRQGlQUph4ETcIEP5wXwdNSHiWGUZAn7sI1MFGmSCAwzse5wn4HElL3ZBkg7JiaVSPsp4yZB0kmmDqBmHpOFjZBWzQndanYNgdXwHDkVeyIt0FSMHoDmp3wZAiz0q7ArL5qLSZBuiYftFFMyI6zWgX8yIn0UG8umDW5QiidKL6ZCcT1wgmQJbZAIEwKu0sI21Bod';
-
-  const myAppToken = 'EAAJWiqdRDFMBANSOQ78Um66j4CHpUnSeFeY4WiLeTLkJeXyLYJqSkqozZAZAWT9VxqjfthYXkc9AHpjjujkioittRfZAoVbYt5BdXUNG3Ara6GDrtZBi6gqJ8Ayqlj7S39lt3tnDnP8QOY45Kf4Q2X2XejnxmHvkOCVV6ufVZBfeN4s0TKWSP2OerQOyQmDxpa9dzXinJpljELdOGtO3caZAvmfzz0UsTZCQqLRDEDkrZBf7VpapmMD1';
-
-  const pageToken = 'EAARp8RvrcH4BABpIx2JgmGGdVgNZAZCI8LsvO1dTZBUtrWv2cFtC8GuTwfdoZAoZBZAK8W4vP5hCxDnLQSstTf5cKx0G5HOgooaF2u2lsE7OXlgqWbJtCCMZCjAuYNKdti18hXeuZCJxBCASc98KtfmZBlhaJhPVD07kvehKr3Es1K13HbZBFicIfStsHst18i1Gm8J1eUZBnZBRJQZDZD';
-
-  const pageAccessToken = localStorage.getItem('pageAccessToken');
-  console.log({pageAccessToken})
-
   const [posts, setPosts] = useState('');
+
   const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
-  const [selectedPage, setSelectedPage] = useState('');
+
+  const [selectedPage, setSelectedPage] = useState({});
   
   const getUserPages = async () => {
 
   };
-
-  useEffect(() => {
-    if (localStorage && localStorage.getItem('page0')) {
-      //const pages =
-    }
-  }, [localStorage]);
+  console.log({userPages})
 
   const getPosts = async () => {
     try {
@@ -55,27 +43,48 @@ export default function Posts({ isLoggedIn }) {
   }, [isLoggedIn]);
 
   const handlePageSelect = (e) => {
-    const page = userPages.map((page, i) => {
-      if (page.id === userPages[i].id) {
+    console.log({...e.target.value})
+    const value = e.target.value;
+    console.log(Object.keys(userPages))
+    //const pages =
+    userPages.forEach((page, i) => {
+      if (Object.values(userPages[i]).includes(e.target.value)) {
         setSelectedPage(page);
       }
     });
   };
 
-  console.log({selectedPage})
+  console.log(selectedPage);
+  console.log(selectedPage.length);
+  console.log(Object.keys(selectedPage).length);
+  console.log(Object.keys(selectedPage).length > 0);
+
   return (
     <div>
       Test posts :
       <form onSubmit={handlePageSelect}>
-        <select name="page" id="pageSelect" value={'selectedPage'} onChange={(e) => handlePageSelect(e)}>
+        <select name="page" id="pageSelect" value={'selectedPage'} onChange={(e) => handlePageSelect(e)} value="options">
+          <option disabled={true} selected={true} value='options'>Sélectionnez la page</option>
           {
-            userPages && userPages.length > 0 && userPages.map((userPage, i) => (
-              //<option value={localStorage.getItem(`pages${i}`)}>{ userPage.id }</option>
-              <option value={i}>{ `${userPage.name} - ID : ${userPage.id}` }</option>
+            userPages && Object.keys(userPages).length > 0 && userPages.map((userPage, i) => (
+              <option value={userPage.id} key={userPage.id}>{ `${userPage.name} - ID : ${userPage.id}` }</option>
             ))
           }
         </select>
       </form>
+      <StyledPage>
+        <ul>
+          {
+            selectedPage && selectedPage.length > 0 && (
+              <>
+                <li key={selectedPage.id}>Nom de la page : { selectedPage.name }</li>
+                <li key={selectedPage.id}>ID de la page : { selectedPage.id }</li>
+                <li key={selectedPage.id}>Catégorie : { selectedPage.category_list[0].name }</li>
+              </>
+            )
+          }
+        </ul>
+      </StyledPage>
       <StyledPostsList>
         {
           posts && posts.map((post, i) => (
@@ -103,4 +112,8 @@ const Post = styled.li`
   line-height: 2;
   border: 1px solid blue;
   border-radius: 5px;
+`;
+
+const StyledPage = styled.div`
+  
 `;
