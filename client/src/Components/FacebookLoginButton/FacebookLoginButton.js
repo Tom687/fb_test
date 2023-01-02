@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import useFacebookSdk2 from '../../hooks/useFacebookSdk2';
 
-export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn }) {
+export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn, pages, setPages }) {
   //const [isLoggedin, setIsLoggedin] = useState(false);
   const [facebook, isFacebookReady] = useFacebookSdk2();
 
@@ -62,12 +62,14 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
 
           if (res.status === 200 || res.data.status === 'success') {
             console.log(res.data.data.data)
+            const pages = res.data.data.data;
             localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('pages', JSON.stringify(res.data.data.data))
+            localStorage.setItem('pages', JSON.stringify(pages))
             res.data.data.data.forEach((val, i) => {
               localStorage.setItem(`page${i}`, JSON.stringify(val));
             });
 
+            setPages(pages);
             setIsLoggedIn(true);
           }
         }
@@ -112,7 +114,7 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
           data-auto-logout-link="false"
           data-use-continue-as="false"
           data-onlogin="checkLoginState();"
-          data-scope="email,public_profile,pages_read_user_content,pages_read_engagement,page_show_list,read_insights"
+          data-scope="email,public_profile,read_insights,pages_read_engagement,pages_read_user_content,"
         />
       }
       {
