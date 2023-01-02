@@ -75,7 +75,7 @@ export default function Posts({ isLoggedIn }) {
       <StyledPage>
         <ul>
           {
-            selectedPage && selectedPage.length > 0 && (
+            selectedPage && Object.keys(selectedPage).length > 0 && (
               <>
                 <li key={selectedPage.id}>Nom de la page : { selectedPage.name }</li>
                 <li key={selectedPage.id}>ID de la page : { selectedPage.id }</li>
