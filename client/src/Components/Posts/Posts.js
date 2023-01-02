@@ -55,20 +55,11 @@ export default function Posts({ isLoggedIn }) {
   }, [isLoggedIn]);
 
   const handlePageSelect = (e) => {
-    /*console.log({pageData})
-    const pageId = pageData.id;*/
-    console.log(e.target.name)
-    console.log(e.target.valueOf())
-    const pages = localStorage.getItem(JSON.parse('pages'));
-    //const page = localStorage.getItem(JSON.parse(`pages${[e.target.value]}`))
-    console.log({pages})
-    const page = pages.map((page, i) => {
-      if (page.id === pages[i].id) {
-        console.log({page})
-        setSelectedPage(page)
+    const page = userPages.map((page, i) => {
+      if (page.id === userPages[i].id) {
+        setSelectedPage(page);
       }
-    })
-    console.log({ page })
+    });
   };
 
   console.log({selectedPage})
