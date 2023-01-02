@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import Insights from '../../Insights/Insights';
 
 // TODO : Passer pages en prop ? Pour ça que ça render en double ?
 export default function Posts({ isLoggedIn }) {
@@ -33,27 +34,6 @@ export default function Posts({ isLoggedIn }) {
     setSelectedPage(...updated);
   };
 
-  const getPageInsights = async () => {
-    try {
-      const res = await axios.post('http://localhost:1337/pages/insights', {
-        pageId: selectedPage.id,
-        metrics: 'page_impressions_unique,page_engaged_users',
-        pageAccessToken: selectedPage.access_token,
-      }, {
-        headers: {
-          authorization: `Bearer ${selectedPage.access_token}`,
-        }
-      });
-
-      console.log({...res.data})
-
-      return res.data;
-    }
-    catch (err) {
-      console.log('getPageInsights err', err);
-    }
-  };
-
 
   // TODO : getPost() après setSelectedPage
   useEffect(() => {
@@ -68,21 +48,17 @@ export default function Posts({ isLoggedIn }) {
     }
   }, [selectedPage, isLoggedIn]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log({selectedPage})
 
     if (selectedPage && Object.keys(selectedPage).length > 0) {
-      console.log(33333)
       getPageInsights()
         .then(result => {
-          console.log(22222)
-          console.log({...result})
           setPageInsights(result);
         })
     }
-  }, [selectedPage]);
+  }, [selectedPage]);*/
 
-  console.log({pageInsights})
 
   return (
     <div>
@@ -126,7 +102,7 @@ export default function Posts({ isLoggedIn }) {
         }
       </StyledPostsList>
       <StyledInsights>
-
+        <Insights selectedPage={selectedPage} />
       </StyledInsights>
     </div>
   );
