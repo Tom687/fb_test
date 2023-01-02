@@ -2,21 +2,19 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-export default function Posts({ isLoggedIn, pages, setPages }) {
+export default function Posts({ isLoggedIn }) {
   const [posts, setPosts] = useState('');
 
-  //const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
-  const [userPages, setUserPages] = useState(pages || []);
+  const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
 
-  const [selectedPage, setSelectedPage] = useState();
-  const [id, setId] = useState('');
+  const [selectedPage, setSelectedPage] = useState({});
 
   const getUserPages = async () => {
 
   };
   console.log({userPages})
 
-  const getPosts = async (pageId) => {
+  const getPosts = async () => {
     try {
       //const res = await axios.get(`https://graph.facebook.com/ncla1ere?fields=id&access_token=${myUserToken}`);
       const pageAccessToken = localStorage.getItem('pageAccessToken');
@@ -48,12 +46,10 @@ export default function Posts({ isLoggedIn, pages, setPages }) {
     userPages.forEach((page, i) => {
       if (Object.values(userPages[i]).includes(e.target.value)) {
         setSelectedPage(page);
-        setId(page.id);
       }
     });
   };
-  console.log({selectedPage})
-  console.log({id})
+
 
   return (
     <div>
