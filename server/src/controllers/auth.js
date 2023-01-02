@@ -9,7 +9,7 @@ export const facebookAuth = async (req, res, next) => {
     client_id: process.env.APP_ID,
     redirect_uri: process.env.CB_URL,
     state: state,
-    scope: 'email',
+    scope: 'email,public_profile,read_insights,ads_read,pages_read_engagement,pages_read_user_content',
   });
 
   const loginURL = `https://www.facebook.com`;
