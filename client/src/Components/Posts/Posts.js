@@ -48,7 +48,7 @@ export default function Posts({ isLoggedIn }) {
     }
   }, [selectedPage, isLoggedIn]);
 
-  console.log(selectedTab);
+  console.log({posts});
 
   return (
     <div>
@@ -86,7 +86,7 @@ export default function Posts({ isLoggedIn }) {
         </ul>
       </StyledPage>
       {
-        selectedTab === 'posts' || selectedTab === 'default' &&
+        selectedTab === 'posts' &&
         <StyledPostsList>
           {
             posts && posts.map((post, i) => (
