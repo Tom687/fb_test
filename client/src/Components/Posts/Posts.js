@@ -13,12 +13,24 @@ export default function Posts({ isLoggedIn }) {
   console.log({pageAccessToken})
 
   const [posts, setPosts] = useState('');
+  const [userPages, setUserPages] = useState(JSON.parse(localStorage.getItem('pages')) || []);
+  const [selectedPage, setSelectedPage] = useState('');
+  
+  const getUserPages = async () => {
+
+  };
+
+  useEffect(() => {
+    if (localStorage && localStorage.getItem('page0')) {
+      //const pages =
+    }
+  }, [localStorage]);
 
   const getPosts = async () => {
     try {
       //const res = await axios.get(`https://graph.facebook.com/ncla1ere?fields=id&access_token=${myUserToken}`);
       const pageAccessToken = localStorage.getItem('pageAccessToken');
-        console.log({pageAccessToken})
+      console.log({pageAccessToken})
 
       // TODO : Pour récupérer l
       // FIXME : ID de la page pas bon, comment récupérer la liste des pages de l'user ?
@@ -42,9 +54,37 @@ export default function Posts({ isLoggedIn }) {
       });
   }, [isLoggedIn]);
 
+  const handlePageSelect = (e) => {
+    /*console.log({pageData})
+    const pageId = pageData.id;*/
+    console.log(e.target.name)
+    console.log(e.target.valueOf())
+    const pages = localStorage.getItem(JSON.parse('pages'));
+    //const page = localStorage.getItem(JSON.parse(`pages${[e.target.value]}`))
+    console.log({pages})
+    const page = pages.map((page, i) => {
+      if (page.id === pages[i].id) {
+        console.log({page})
+        setSelectedPage(page)
+      }
+    })
+    console.log({ page })
+  };
+
+  console.log({selectedPage})
   return (
     <div>
       Test posts :
+      <form onSubmit={handlePageSelect}>
+        <select name="page" id="pageSelect" value={'selectedPage'} onChange={(e) => handlePageSelect(e)}>
+          {
+            userPages && userPages.length > 0 && userPages.map((userPage, i) => (
+              //<option value={localStorage.getItem(`pages${i}`)}>{ userPage.id }</option>
+              <option value={i}>{ `${userPage.name} - ID : ${userPage.id}` }</option>
+            ))
+          }
+        </select>
+      </form>
       <StyledPostsList>
         {
           posts && posts.map((post, i) => (

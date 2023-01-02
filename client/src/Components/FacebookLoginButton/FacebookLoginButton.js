@@ -5,43 +5,44 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
   //const [isLoggedin, setIsLoggedin] = useState(false);
 
   /*const onLoginClick = () => {
-    console.info('LOGIN CLICKED !');
-    //window.FB.login(...);
-    window.FB.getLoginStatus(function(response) {
-      //statusChangeCallback(response);
-      console.log(response);
-      console.log(1)
-      if (response.authResponse.accessToken) {
-        console.log(2)
-        setIsLoggedin(true);
-      }
-      else {
-        console.log(3)
-        setIsLoggedin(false);
-      }
-      console.log(4)
-    });
-    /!*window.FB.login(function(response) {
-      console.log({response})
-      if (response.authResponse) {
-        setIsLoggedin(true);
-        console.log('AUTH RES', response.authResponse);
-      }
-      else {
-        setIsLoggedin(false);
-        console.log('eeeeennnn');
-      }
-    });*!/
-  };*/
+   console.info('LOGIN CLICKED !');
+   //window.FB.login(...);
+   window.FB.getLoginStatus(function(response) {
+   //statusChangeCallback(response);
+   console.log(response);
+   console.log(1)
+   if (response.authResponse.accessToken) {
+   console.log(2)
+   setIsLoggedin(true);
+   }
+   else {
+   console.log(3)
+   setIsLoggedin(false);
+   }
+   console.log(4)
+   });
+   /!*window.FB.login(function(response) {
+   console.log({response})
+   if (response.authResponse) {
+   setIsLoggedin(true);
+   console.log('AUTH RES', response.authResponse);
+   }
+   else {
+   setIsLoggedin(false);
+   console.log('eeeeennnn');
+   }
+   });*!/
+   };*/
 
   window.checkLoginState = () => {
     window.FB.getLoginStatus(async function(response) {
       //statusChangeCallback(response);
+      console.log(response);
       if (response.status === 'connected' || response.authResponse) {
         const accessToken = response.authResponse.accessToken;
         const userId = response.authResponse.userID;
         setIsLoggedIn(true);
-
+        console.log({userId})
         try {
           // TODO : Changer url ?
           const res = await axios.post('http://localhost:1337/pages', {
@@ -49,8 +50,8 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
             client_secret: 'e61a882707fe673a37d55a450486a68c',
             fb_exchange_token: accessToken,
             accessToken,
-            apiUrl: 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token',
             userId,
+            apiUrl: 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token',
           }, {
             headers: {
               authorization: `Bearer ${accessToken}`
@@ -58,13 +59,18 @@ export default function FacebookLoginButton({ isLoggedIn = false, setIsLoggedIn 
           });
 
           if (res.status === 200 || res.data.status === 'success') {
+            console.log(res.data.data.data)
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('pages', JSON.stringify(res.data.data.data))
+            res.data.data.data.forEach((val, i) => {
+              console.log({val})
+              localStorage.setItem(`page${i}`, JSON.stringify(val));
+            })
             //localStorage.setItem('clientId', '1242384183292030')
             //localStorage.setItem('appId', '1242384183292030')
-            localStorage.setItem('pageAccessToken', res.data.pageAccessToken);
-            localStorage.setItem('pageAccessTokenType', res.data.pageAccessTokenType);
-            localStorage.setItem('pageAccessTokenExpiresIn', res.data.expiresIn);
-            localStorage.setItem('userId', userId);
+            //localStorage.setItem('pageAccessToken', res.data.pageAccessToken);
+            //localStorage.setItem('pageAccessTokenType', res.data.pageAccessTokenType);
+            //localStorage.setItem('pageAccessTokenExpiresIn', res.data.expiresIn);
 
             setIsLoggedIn(true);
           }
