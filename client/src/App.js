@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Posts from './Components/Posts/Posts';
-//import FB from './Components/FacebookLoginButton/FB';
 import FacebookLoginButton from './Components/FacebookLoginButton/FacebookLoginButton';
 
-//import { initializeFacebookSdk } from './utils/initFacebookSdk';
 
 function App() {
-  //initializeFacebookSdk();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [pages, setPages] = useState([]);
-
-  /*const [, forceRender] = useState();
-
-  useEffect(() => {
-    forceRender();
-  }, [pages]);*/
 
   return (
     <div className="App">
@@ -26,7 +17,6 @@ function App() {
         pages={pages}
         setPages={setPages}
       />
-      {/*<FB />*/}
       <Posts
         isLoggedIn={isLoggedIn}
         pages={pages}
