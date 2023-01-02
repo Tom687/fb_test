@@ -11,8 +11,6 @@ export default function Posts({ isLoggedIn }) {
 
   const [selectedPage, setSelectedPage] = useState({});
 
-  const [pageInsights, setPageInsights] = useState([]);
-
   const getUserPages = async () => {
     try {
       const pageAccessToken = selectedPage.access_token;
@@ -48,17 +46,6 @@ export default function Posts({ isLoggedIn }) {
     }
   }, [selectedPage, isLoggedIn]);
 
-  /*useEffect(() => {
-    console.log({selectedPage})
-
-    if (selectedPage && Object.keys(selectedPage).length > 0) {
-      getPageInsights()
-        .then(result => {
-          setPageInsights(result);
-        })
-    }
-  }, [selectedPage]);*/
-
 
   return (
     <div>
@@ -82,9 +69,9 @@ export default function Posts({ isLoggedIn }) {
           {
             selectedPage && Object.keys(selectedPage).length > 0 && (
               <React.Fragment key={selectedPage.id}>
-                <li>Nom de la page : { selectedPage.name }</li>
-                <li>ID de la page : { selectedPage.id }</li>
-                <li>Catégorie : { selectedPage.category }</li>
+                <li>Nom de la page : {selectedPage.name}</li>
+                <li>ID de la page : {selectedPage.id}</li>
+                <li>Catégorie : {selectedPage.category}</li>
               </React.Fragment>
             )
           }
@@ -123,9 +110,9 @@ const Post = styled.li`
 `;
 
 const StyledPage = styled.div`
-  
+
 `;
 
 const StyledInsights = styled.div`
-  
+
 `;
